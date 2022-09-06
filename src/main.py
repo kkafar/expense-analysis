@@ -35,6 +35,7 @@ def main():
     plot_and_scatter(ax, xdata, income_net_by_month(data, span), label="income net", linestyle="--")
     plot_and_scatter(ax, xdata, income_gross_by_month(data, span), label="income gross", linestyle="--")
     plot_and_scatter(ax, xdata, expenses_by_month(data, span), label="expenses net", linestyle="--")
+    ax.plot([xdata[0], xdata[-1]], [0, 0])
     ax.legend()
     fig.autofmt_xdate()
     plt.show()
