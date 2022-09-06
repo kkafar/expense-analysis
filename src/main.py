@@ -29,14 +29,18 @@ def main():
         year = date_begin.year + year_oveflow
         xdata.append(dt.date(year, month, 1))
 
-    total_net = sum_netto(data)
     income_monthly_net = np.array(income_net_by_month(data, span))
     income_monthly_gross = np.array(income_gross_by_month(data, span))
     expenses_monthly = np.array(expenses_by_month(data, span))
+    total_net = sum_netto(data)
+    total_gross = np.sum(income_monthly_gross)
+    total_expense = np.sum(expenses_monthly)
     
     print(f"Total net: {total_net:.2f}")
+    print(f"{'DATE':<12}{'GROSS':>10} {'EXPENSE':>10} {'NET':>10}")
     for (date, income_gross, expense, income_net) in zip(xdata, income_monthly_gross, expenses_monthly, income_monthly_net):
-        print(f"{date}: {income_gross:>8.2f} {expense:>8.2f} {income_net:>8.2f}")
+        print(f"{date}: {income_gross:>10.2f} {expense:>10.2f} {income_net:>10.2f}")
+    print(f"{'TOTAL':<12}{total_gross:>10.2f} {total_expense:>10.2f} {total_net:>10.2f}")
         
 
     ax.xaxis.set_major_formatter(mdt.DateFormatter('%Y-%m-%d'))
