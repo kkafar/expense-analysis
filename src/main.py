@@ -47,6 +47,8 @@ def expenses_by_month(transactions: list[Transaction]) -> list[float]:
         if t.amount < 0:
             result[t.date.month - 1] += t.amount
 
+    return result
+
     
 def main():
     data = parse_data("data/bills.csv")
