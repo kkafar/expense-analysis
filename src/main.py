@@ -43,7 +43,8 @@ def main():
     print(f"{'TOTAL':<12}{total_gross:>10.2f} {total_expense:>10.2f} {total_net:>10.2f}")
         
 
-    ax.xaxis.set_major_formatter(mdt.DateFormatter('%Y-%m-%d'))
+    ax.xaxis.set_major_formatter(mdt.DateFormatter('%Y-%m'))
+    ax.xaxis.set_major_locator(mdt.MonthLocator(interval=1))
     plot_and_scatter(ax, xdata, income_monthly_net, label="income net", linestyle="--")
     plot_and_scatter(ax, xdata, income_monthly_gross, label="income gross", linestyle="--")
     plot_and_scatter(ax, xdata, expenses_monthly, label="expenses net", linestyle="--")
