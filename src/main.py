@@ -6,15 +6,14 @@ from plot_util import *
 
     
 def main():
-    data = parse_data("data/bills.csv")
+    data = parse_data("data/transactions-2022.01.01-2022.09.06.csv")
 
-    # print(Transaction.print_transactions(records=data))
     print(f"Total net: {sum_netto(data):.2f}")
     print(f"Expenses by month: {income_net_by_month(data)}")
 
     fig, ax = plt.subplots(figsize=(12.7, 7))
     
-    ax.set(xlabel="month", ylabel="amount", title="Income net by month in 2022")
+    ax.set(xlabel="month", ylabel="amount", title="Income & expenses in 2022")
     xdata = [i for i in range(1, 12 + 1)]
     plot_and_scatter(ax, xdata, income_net_by_month(data), label="income net", linestyle="--")
     plot_and_scatter(ax, xdata, income_gross_by_month(data), label="income gross", linestyle="--")
