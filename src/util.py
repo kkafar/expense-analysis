@@ -1,4 +1,6 @@
+import csv
 from transaction import Transaction
+
 
 def parse_data(source: str) -> list[Transaction]:
     records: list[Transaction] = []
@@ -11,6 +13,7 @@ def parse_data(source: str) -> list[Transaction]:
             records.append(Transaction(record))
 
     return records
+
 
 def sum_netto(transactions: list[Transaction]) -> float:
     total = 0
@@ -28,6 +31,7 @@ def income_net_by_month(transactions: list[Transaction]) -> list[float]:
 
     return result
 
+
 def income_gross_by_month(transactions: list[Transaction]) -> list[float]:
     result = [0 for _ in range(12)]
     
@@ -36,6 +40,7 @@ def income_gross_by_month(transactions: list[Transaction]) -> list[float]:
             result[t.date.month - 1] += t.amount
 
     return result
+
 
 def expenses_by_month(transactions: list[Transaction]) -> list[float]:
     result = [0 for _ in range(12)]
