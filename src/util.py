@@ -5,7 +5,7 @@ from transaction import Transaction
 def parse_data(source: str) -> list[Transaction]:
     records: list[Transaction] = []
 
-    with open("data/bills.csv") as input:
+    with open(source) as input:
         input_reader = csv.reader(input)
         
         _ = next(input_reader)
