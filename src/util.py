@@ -35,7 +35,7 @@ def income_net_by_month(transactions: list[Transaction], span: int = 12) -> list
     result = [0 for _ in range(span + 1)]
 
     for t in transactions:
-        result[timediff_in_months(transactions[-1].date, t.date) - 1] += t.amount
+        result[timediff_in_months(transactions[-1].date, t.date)] += t.amount
 
     return result
 
@@ -45,7 +45,7 @@ def income_gross_by_month(transactions: list[Transaction], span: int = 12) -> li
     
     for t in transactions:
         if t.amount > 0:
-            result[timediff_in_months(transactions[-1].date, t.date) - 1] += t.amount
+            result[timediff_in_months(transactions[-1].date, t.date)] += t.amount
 
     return result
 
@@ -55,6 +55,6 @@ def expenses_by_month(transactions: list[Transaction], span: int = 12) -> list[f
     
     for t in transactions:
         if t.amount < 0:
-            result[timediff_in_months(transactions[-1].date, t.date) - 1] += t.amount
+            result[timediff_in_months(transactions[-1].date, t.date)] += t.amount
 
     return result
