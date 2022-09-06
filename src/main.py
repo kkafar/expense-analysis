@@ -40,7 +40,7 @@ def income_gross_by_month(transactions: list[Transaction]) -> list[float]:
 
     return result
 
-def expenses_by_monts(transactions: list[Transaction]) -> list[float]:
+def expenses_by_month(transactions: list[Transaction]) -> list[float]:
     result = [0 for _ in range(12)]
     
     for t in transactions:
