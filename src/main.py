@@ -13,7 +13,7 @@ def main():
 
     fig, ax = plt.subplots(figsize=(12.7, 7))
     
-    ax.set(xlabel="month", ylabel="amount", title="Income & expenses in 2022")
+    ax.set(xlabel="month", ylabel="amount", title="Income & expenses")
     
     # For now we assume that thransactions are sorted - the newest at the top
     date_begin = data[-1].date
