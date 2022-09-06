@@ -3,10 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdt
 import datetime as dt
 import numpy as np
-from transaction import Transaction, TransactionDetails
 from util import *
 from plot_util import *
-from pprint import pprint
 
     
 def main():
