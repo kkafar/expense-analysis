@@ -60,9 +60,12 @@ def main():
     fig, ax = plt.subplots(figsize=(12.7, 7))
     
     ax.set(xlabel="month", ylabel="amount", title="Income net by month in 2022")
-    ax.plot([i for i in range(1, 12 + 1)], income_net_by_month(data), label="income net")
-    ax.plot([i for i in range(1, 12 + 1)], income_gross_by_month(data), label="income gross")
-    ax.plot([i for i in range(1, 12 + 1)], expenses_by_month(data), label="expenses net")
+    ax.plot([i for i in range(1, 12 + 1)], income_net_by_month(data), linestyle="--")
+    ax.scatter([i for i in range(1, 12 + 1)], income_net_by_month(data), label="income net", linestyle="--")
+    ax.plot([i for i in range(1, 12 + 1)], income_gross_by_month(data), linestyle="--")
+    ax.scatter([i for i in range(1, 12 + 1)], income_gross_by_month(data), label="income gross", linestyle="--")
+    ax.plot([i for i in range(1, 12 + 1)], expenses_by_month(data), linestyle="--")
+    ax.scatter([i for i in range(1, 12 + 1)], expenses_by_month(data), label="expenses net", linestyle="--")
     ax.legend()
     plt.show()
 
