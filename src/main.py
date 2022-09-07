@@ -55,8 +55,10 @@ def main():
         plot_and_scatter(ax, xdata, income_monthly_gross, label="income gross", linestyle="--")
         plot_and_scatter(ax, xdata, expenses_monthly, label="expenses net", linestyle="--")
         ax.plot([xdata[0], xdata[-1]], [0, 0])
+        ax.grid(True)
         ax.legend()
         fig.autofmt_xdate()
+        plt.locator_params(axis='y', nbins=10)
         plt.show()
 
 
