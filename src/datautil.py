@@ -58,3 +58,19 @@ def expenses_by_month(transactions: list[Transaction], span: int = 12) -> list[f
             result[timediff_in_months(transactions[-1].date, t.date)] += t.amount
 
     return result
+
+def get_timeline(data: list[Transaction]) -> list[dt.date]:
+    # For now we assume that thransactions are sorted - the newest at the top
+    date_begin = data[-1].date
+    date_end = data[0].date
+    span = timediff_in_months(date_begin, date_end)
+
+    xdata = []
+    for offset in range(span + 1):
+        month = date_begin.month - 1 + offset
+        year_oveflow = month // 12
+        month = month % 12 + 1
+        year = date_begin.year + year_oveflow
+        xdata.append(dt.date(year, month, 1))
+
+    return span, xdata

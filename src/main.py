@@ -3,31 +3,17 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdt
 import datetime as dt
 import numpy as np
-from util import *
-from plot_util import *
+from datautil import *
+from plotutil import *
+from cli import *
+    
 
     
 def main():
-    parser = argparse.ArgumentParser(description="Small CLI driven application for keeping expenses under control.")
-    parser.add_argument("--file", action='store', default="data/transactions-2020.09.07-2022.09.06.csv")
-    parser.add_argument("--plot", action='store_true')
-    parser.add_argument("--quiet", action='store_true')
-    args = parser.parse_args()
+    args = build_cli().parse_args()
 
     data = parse_data(args.file)
-    
-    # For now we assume that thransactions are sorted - the newest at the top
-    date_begin = data[-1].date
-    date_end = data[0].date
-    span = timediff_in_months(date_begin, date_end)
-
-    xdata = []
-    for offset in range(span + 1):
-        month = date_begin.month - 1 + offset
-        year_oveflow = month // 12
-        month = month % 12 + 1
-        year = date_begin.year + year_oveflow
-        xdata.append(dt.date(year, month, 1))
+    span, xdata = get_timeline(data)
 
     income_monthly_net = np.array(income_net_by_month(data, span))
     income_monthly_gross = np.array(income_gross_by_month(data, span))
