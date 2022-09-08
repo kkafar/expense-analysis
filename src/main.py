@@ -22,8 +22,10 @@ def main():
     total_net = sum_netto(data)
     total_gross = np.sum(income_monthly_gross)
     total_expense = np.sum(expenses_monthly)
-    
-    if not args.quiet: 
+
+    action_taken = False
+    if args.table or args.all: 
+        action_taken = True
         print_result_table(
             total_no_transactions=len(data),
             timeline=xdata,
@@ -34,7 +36,8 @@ def main():
             total_gross=total_gross,
             total_expense=total_expense)
         
-    if args.plot:
+    if args.plot or args.all:
+        action_taken = True
         plot_result(
             total_no_transactions=len(data),
             timeline=xdata,
@@ -44,6 +47,11 @@ def main():
             total_net=total_net,
             total_gross=total_gross,
             total_expense=total_expense)
+
+            
+    if not action_taken:
+        print_no_action_taken_warning()
+        
 
 
 if __name__ == "__main__":
