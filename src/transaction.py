@@ -1,4 +1,3 @@
-
 from datetime import date
 
 StrOpt = str | None
