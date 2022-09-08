@@ -1,6 +1,7 @@
 import csv
 import datetime as dt
 import numpy as np
+from functools import reduce
 from transaction import Transaction
 
 def timediff_in_months(date_begin: dt.date, date_end: dt.date) -> int:
@@ -24,12 +25,7 @@ def parse_data(source: str) -> list[Transaction]:
 
 
 def sum_netto(transactions: list[Transaction]) -> float:
-    result = 0
-
-    for transaction in transactions:
-        result += transaction.amount
-
-    return result
+    return reduce(lambda s, t: s + t.amount, transactions, 0)
 
     
 def income_net_by_month(transactions: list[Transaction], span: int = 12) -> list[float]:
