@@ -3,6 +3,7 @@ import datetime as dt
 import numpy as np
 from functools import reduce
 from transaction import Transaction
+from collections import defaultdict
 
 def timediff_in_months(date_begin: dt.date, date_end: dt.date) -> int:
     diff = (date_end.year - date_begin.year) * 12 + date_end.month - date_begin.month
@@ -71,3 +72,15 @@ def get_timeline(data: list[Transaction]) -> list[dt.date]:
         xdata.append(dt.date(year, month, 1))
 
     return span, xdata
+
+    
+def group_by_localization(transactions: list[Transaction]) -> dict:
+    result = defaultdict(list)
+    
+    for t in transactions:
+        if t.details.localization is not None:
+            result[t.details.localization].append(t)
+        else:
+            result["unknown"].append(t)
+            
+    return result
