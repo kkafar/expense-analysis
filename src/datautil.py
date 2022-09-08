@@ -1,5 +1,6 @@
 import csv
 import datetime as dt
+import numpy as np
 from transaction import Transaction
 
 def timediff_in_months(date_begin: dt.date, date_end: dt.date) -> int:
@@ -32,7 +33,7 @@ def sum_netto(transactions: list[Transaction]) -> float:
 
     
 def income_net_by_month(transactions: list[Transaction], span: int = 12) -> list[float]:
-    result = [0 for _ in range(span + 1)]
+    result = np.zeros(shape=span + 1)
 
     for t in transactions:
         result[timediff_in_months(transactions[-1].date, t.date)] += t.amount
@@ -41,7 +42,7 @@ def income_net_by_month(transactions: list[Transaction], span: int = 12) -> list
 
 
 def income_gross_by_month(transactions: list[Transaction], span: int = 12) -> list[float]:
-    result = [0 for _ in range(span + 1)]
+    result = np.zeros(shape=span + 1)
     
     for t in transactions:
         if t.amount > 0:
@@ -51,7 +52,7 @@ def income_gross_by_month(transactions: list[Transaction], span: int = 12) -> li
 
 
 def expenses_by_month(transactions: list[Transaction], span: int = 12) -> list[float]:
-    result = [0 for _ in range(span + 1)]
+    result = np.zeros(shape=span + 1)
     
     for t in transactions:
         if t.amount < 0:
