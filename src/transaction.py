@@ -97,7 +97,7 @@ def groceries_category_pred(t: 'Transaction') -> bool:
     return _localization_pred(t, [
         "BIEDRONKA", "CARREFOUR", "ZABKA", 
         "AWITEKS", "QLT", "Nasz Chleb", "DELIKATESY",
-        "AUCHAN", "MAGNUS"])
+        "AUCHAN", "MAGNUS", "Delikatesy"])
 
 
 def meds_category_pred(t: 'Transaction') -> bool:
@@ -118,7 +118,8 @@ def restaurants_category_pred(t: 'Transaction') -> bool:
         "BOSCAIOLA", "RESTAURACJA", "TRATTORIA", "PORTO BELLO",
         "DOBRA PACZKARNIA", "Pizzeria", "SUSHI", "Hard Rock Cafe",
         "PAPA GELATO", "KAWIARNIA", "CIRCLE K", "JAZZ ROCK",
-        "PIJALNIE", "EMALIA", "PIEC"]):
+        "PIJALNIE", "EMALIA", "PIEC", "FABRYKA SMAKU", "ROLLS",
+        "COFFEE"]):
         return True
 
     return False
@@ -129,7 +130,9 @@ def donations_category_pred(t: 'Transaction') -> bool:
     
     
 def cosmetics_category_pred(t: 'Transaction') -> bool:
-    return _localization_pred(t, ["ROSSMANN", "SEPHORA", "STUDIO FRYZUR", "SALON FRYZJERSKI"])
+    return _localization_pred(t, [
+        "ROSSMANN", "SEPHORA", "STUDIO FRYZUR", "SALON FRYZJERSKI",
+        "RISOR"])
 
         
 def alcohol_category_pred(t: 'Transaction') -> bool:
@@ -137,7 +140,8 @@ def alcohol_category_pred(t: 'Transaction') -> bool:
         "RE OGRODEK", "KOCYK", "MADOMARKET", 
         "FINE WINE", "WEZZE", "KLUB STUDIO",
         "PIWO SWIEZE", "STUDENT MARKET",
-        "Klub Studio", "BAR ZEW"])
+        "Klub Studio", "BAR ZEW", "Al Capone",
+        "CYRANO"])
     
     
 def electronics_category_pred(t: 'Transaction') -> bool:
@@ -154,12 +158,7 @@ def salary_category_pred(t: 'Transaction') -> bool:
 
     
 def rent_category_pred(t: 'Transaction') -> bool:
-    title = t.details.title
-    
-    if title is None or title.find("OP£ATA ZA MIESZKANIE") == -1:
-        return False
-
-    return True
+    return _title_pred(t, ["CZYNSZ", "OP£ATA ZA MIESZKANIE"])
 
 
 def clothing_category_pred(t: 'Transaction') -> bool:
@@ -167,8 +166,9 @@ def clothing_category_pred(t: 'Transaction') -> bool:
         "MARTES SPORT", "sklepbiegacza.pl",
         "LANCERTO", "KAZAR", "AMBRA", "ZEGARMISTRZ",
         "MASSIMO DUTTI", "RYLKO", "Wrangler", "Nike",
-        "Timberland", "ADIDAS", "FootBlocker", "TIMBERLAND",
-        "Lavard", "LAVARD", "MEDICINE"])
+        "Timberland", "ADIDAS", "FootLocker", "TIMBERLAND",
+        "Lavard", "LAVARD", "MEDICINE", "Adres: HM", "BYTOM", 
+        "PULL & BEAR"])
 
     
 def atm_category_pred(t: 'Transaction') -> bool:
@@ -178,13 +178,13 @@ def atm_category_pred(t: 'Transaction') -> bool:
 
 def transport_category_pred(t: 'Transaction') -> bool:
     return _localization_pred(t, [
-        "BOLT", "rezerwacje.neobus.pl", "MPK KRAKOW", "intercity"]) or _title_pred(t, [
-        "ZAKUP BILETU KOMUNIKACYJNEGO", "barbara.net"
-        ])
+        "BOLT", "rezerwacje.neobus.pl", "MPK KRAKOW", "intercity"]) or \
+        _title_pred(t, ["ZAKUP BILETU KOMUNIKACYJNEGO", "barbara.net"]) or \
+        _sender_pred(t, ["NEOBUS"])
 
         
 def other_shopping_category_pred(t: 'Transaction') -> bool:
-    return _localization_pred(t, ["allegro.pl"])
+    return _localization_pred(t, ["allegro.pl", "TESCOMA", "SMYK"])
         
         
 def media_category_pred(t: 'Transaction') -> bool:

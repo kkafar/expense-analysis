@@ -1,4 +1,5 @@
 from pprint import pprint
+from typing import Counter
 import numpy as np
 from datautil import *
 from cli import *
@@ -54,10 +55,26 @@ def main():
     #     print(loc, "count:", len(data_by_localization[loc]), "amount:", reduce(lambda s, t: s + t.amount,  data_by_localization[loc], 0))
 
 
-    for t in filter(lambda t: t.category == Transaction.CATEGORY_DEFAULT, data):
-        print(t)
+    # for t in filter(lambda t: t.category == Transaction.CATEGORY_DEFAULT, data):
+    #     print(t)
 
-            
+    # print(len(list(filter(lambda t: t.category == Transaction.CATEGORY_DEFAULT, data))))
+
+    
+    # counter = Counter()
+    # for t in data:
+    #     counter[t.category] += 1
+        
+
+    # for entry in counter:
+    #     print(entry, counter[entry])
+    # print(counter)
+
+    sum_by_category = sum_net_by_category(data)
+
+    # for cat, amount in sum_by_category.items():
+    #     print(cat, amount)
+
     if not action_taken:
         print_no_action_taken_warning()
         

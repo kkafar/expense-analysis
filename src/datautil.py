@@ -84,3 +84,13 @@ def group_by_localization(transactions: list[Transaction]) -> dict:
             result["unknown"].append(t)
             
     return result
+
+
+def sum_net_by_category(transactions: list[Transaction]) -> dict:
+    result = defaultdict(lambda: 0)
+
+    for t in transactions:
+        result[t.category] += t.amount
+    
+    return result
+    
