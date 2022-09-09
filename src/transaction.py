@@ -85,6 +85,10 @@ def _receiver_pred(t: 'Transaction', substrs: list[str]) -> bool:
     return _has_any_substr(t.details.receiver, substrs=substrs)
 
 
+def _sender_pred(t: 'Transaction', substrs: list[str]) -> bool:
+    return _has_any_substr(t.details.sender, substrs=substrs)
+
+
 def any_category_pred(_: 'Transaction') -> True:
     return True
 
@@ -92,7 +96,8 @@ def any_category_pred(_: 'Transaction') -> True:
 def groceries_category_pred(t: 'Transaction') -> bool:
     return _localization_pred(t, [
         "BIEDRONKA", "CARREFOUR", "ZABKA", 
-        "AWITEKS", "QLT", "Nasz Chleb", "DELIKATESY"])
+        "AWITEKS", "QLT", "Nasz Chleb", "DELIKATESY",
+        "AUCHAN", "MAGNUS"])
 
 
 def meds_category_pred(t: 'Transaction') -> bool:
@@ -111,24 +116,32 @@ def restaurants_category_pred(t: 'Transaction') -> bool:
         "Good Lood", "PIZZATOPIA", "LOOD IS GOOD",
         "DOMINIUM", "Thai Cooking", "LA GRANDE MAMMA",
         "BOSCAIOLA", "RESTAURACJA", "TRATTORIA", "PORTO BELLO",
-        "DOBRA PACZKARNIA"]):
+        "DOBRA PACZKARNIA", "Pizzeria", "SUSHI", "Hard Rock Cafe",
+        "PAPA GELATO", "KAWIARNIA", "CIRCLE K", "JAZZ ROCK",
+        "PIJALNIE", "EMALIA", "PIEC"]):
         return True
 
     return False
+
+
+def donations_category_pred(t: 'Transaction') -> bool:
+    return _sender_pred(t, ["AW KAFARA", "AW  KAFARA"])
     
     
 def cosmetics_category_pred(t: 'Transaction') -> bool:
-    return _localization_pred(t, ["ROSSMANN", "SEPHORA"])
+    return _localization_pred(t, ["ROSSMANN", "SEPHORA", "STUDIO FRYZUR", "SALON FRYZJERSKI"])
 
         
 def alcohol_category_pred(t: 'Transaction') -> bool:
     return _localization_pred(t, [
         "RE OGRODEK", "KOCYK", "MADOMARKET", 
-        "FINE WINE", "WEZZE", "KLUB STUDIO"])
+        "FINE WINE", "WEZZE", "KLUB STUDIO",
+        "PIWO SWIEZE", "STUDENT MARKET",
+        "Klub Studio", "BAR ZEW"])
     
     
 def electronics_category_pred(t: 'Transaction') -> bool:
-    return _localization_pred(t, ["x-kom.pl"])
+    return _localization_pred(t, ["x-kom.pl", "LOGITECH"])
 
 
 def salary_category_pred(t: 'Transaction') -> bool:
@@ -153,7 +166,9 @@ def clothing_category_pred(t: 'Transaction') -> bool:
     return _localization_pred(t, [
         "MARTES SPORT", "sklepbiegacza.pl",
         "LANCERTO", "KAZAR", "AMBRA", "ZEGARMISTRZ",
-        "MASSIBO DUTTI", "RYLKO"])
+        "MASSIMO DUTTI", "RYLKO", "Wrangler", "Nike",
+        "Timberland", "ADIDAS", "FootBlocker", "TIMBERLAND",
+        "Lavard", "LAVARD", "MEDICINE"])
 
     
 def atm_category_pred(t: 'Transaction') -> bool:
@@ -164,7 +179,7 @@ def atm_category_pred(t: 'Transaction') -> bool:
 def transport_category_pred(t: 'Transaction') -> bool:
     return _localization_pred(t, [
         "BOLT", "rezerwacje.neobus.pl", "MPK KRAKOW", "intercity"]) or _title_pred(t, [
-        "ZAKUP BILETU KOMUNIKACYJNEGO"
+        "ZAKUP BILETU KOMUNIKACYJNEGO", "barbara.net"
         ])
 
         
@@ -173,14 +188,21 @@ def other_shopping_category_pred(t: 'Transaction') -> bool:
         
         
 def media_category_pred(t: 'Transaction') -> bool:
-    return _title_pred(t, ["FAKTURY ZA GAZ"]) or _receiver_pred(t, ["PGNIG", "TAURON"])
+    return _title_pred(t, ["FAKTURY ZA GAZ"]) or \
+        _receiver_pred(t, ["PGNIG", "TAURON"]) or \
+        _sender_pred(t, ["GRZYB", "MATEUSZ", "WINIARSKI"])
+
 
 
 def entertainment_category_pred(t: 'Transaction') -> bool:
     return _localization_pred(t, [
         "KINO KIJOW", "cinema-city", "CYBERPUB",
-        "STEAM"])
+        "STEAM", "eventim.pl", "CINEMA CITY", "EMPIK", "RCKP",
+        "MULTIKINO", "kinomikro", "Amazon", "HBO"])
 
+
+def scholarship_category_pred(t: 'Transaction') -> bool:
+    return _sender_pred(t, ["AKADEMIA GÓRNICZO-HUTNICZA"])
 
 class Transaction(object):
     KEY_DATE = 0
@@ -199,13 +221,15 @@ class Transaction(object):
         TransactionCategory("alcohol", alcohol_category_pred),
         TransactionCategory("electronics", electronics_category_pred),
         TransactionCategory("salary", salary_category_pred),
+        TransactionCategory("donations", donations_category_pred),
         TransactionCategory("rent", rent_category_pred),
         TransactionCategory("clothing", clothing_category_pred),
         TransactionCategory("atm", atm_category_pred),
         TransactionCategory("media", media_category_pred),
         TransactionCategory("cosmetics", cosmetics_category_pred),
         TransactionCategory("entertainment", entertainment_category_pred),
-        TransactionCategory("other_shopping", other_shopping_category_pred)
+        TransactionCategory("other_shopping", other_shopping_category_pred),
+        TransactionCategory("scholarship", scholarship_category_pred)
     ])
 
     CATEGORY_DEFAULT = TransactionCategory("Other", any_category_pred)
