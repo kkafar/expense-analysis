@@ -119,7 +119,7 @@ def restaurants_category_pred(t: 'Transaction') -> bool:
         "DOBRA PACZKARNIA", "Pizzeria", "SUSHI", "Hard Rock Cafe",
         "PAPA GELATO", "KAWIARNIA", "CIRCLE K", "JAZZ ROCK",
         "PIJALNIE", "EMALIA", "PIEC", "FABRYKA SMAKU", "ROLLS",
-        "COFFEE"]):
+        "COFFEE", "CYRANO"]):
         return True
 
     return False
@@ -140,8 +140,7 @@ def alcohol_category_pred(t: 'Transaction') -> bool:
         "RE OGRODEK", "KOCYK", "MADOMARKET", 
         "FINE WINE", "WEZZE", "KLUB STUDIO",
         "PIWO SWIEZE", "STUDENT MARKET",
-        "Klub Studio", "BAR ZEW", "Al Capone",
-        "CYRANO"])
+        "Klub Studio", "BAR ZEW", "Al Capone"])
     
     
 def electronics_category_pred(t: 'Transaction') -> bool:
