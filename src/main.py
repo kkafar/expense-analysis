@@ -5,6 +5,7 @@ from datautil import *
 from cli import *
 from presentation.cli import print_result_table
 from presentation.plot import plot_result
+from util.lazy import LazyEval
 
     
 def main():
@@ -13,12 +14,13 @@ def main():
     data = parse_data(args.file)
     span, xdata = get_timeline(data)
 
-    income_monthly_net = income_net_by_month(data, span)
-    income_monthly_gross = income_gross_by_month(data, span)
-    expenses_monthly = expenses_by_month(data, span)
-    total_net = sum_netto(data)
-    total_gross = np.sum(income_monthly_gross)
-    total_expense = np.sum(expenses_monthly)
+    
+    income_monthly_net = LazyEval(income_net_by_month, data, span)
+    income_monthly_gross = LazyEval(income_gross_by_month, data, span)
+    expenses_monthly = LazyEval(expenses_by_month, data, span)
+    total_net = LazyEval(sum_netto, data)
+    total_gross = LazyEval(np.sum, income_monthly_gross.get())
+    total_expense = LazyEval(np.sum, expenses_monthly.get())
 
     action_taken = False
     if args.table or args.all: 
@@ -26,24 +28,24 @@ def main():
         print_result_table(
             total_no_transactions=len(data),
             timeline=xdata,
-            income_gross=income_monthly_gross,
-            expenses=expenses_monthly,
-            income_net=income_monthly_net,
-            total_net=total_net,
-            total_gross=total_gross,
-            total_expense=total_expense)
+            income_gross=income_monthly_gross.get(),
+            expenses=expenses_monthly.get(),
+            income_net=income_monthly_net.get(),
+            total_net=total_net.get(),
+            total_gross=total_gross.get(),
+            total_expense=total_expense.get())
         
     if args.plot or args.all:
         action_taken = True
         plot_result(
             total_no_transactions=len(data),
             timeline=xdata,
-            income_gross=income_monthly_gross,
-            expenses=expenses_monthly,
-            income_net=income_monthly_net,
-            total_net=total_net,
-            total_gross=total_gross,
-            total_expense=total_expense)
+            income_gross=income_monthly_gross.get(),
+            expenses=expenses_monthly.get(),
+            income_net=income_monthly_net.get(),
+            total_net=total_net.get(),
+            total_gross=total_gross.get(),
+            total_expense=total_expense.get())
 
             
     # data_by_localization = group_by_localization(data)
