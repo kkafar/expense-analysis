@@ -1,5 +1,4 @@
 from datetime import date
-from nis import cat
 from typing import Callable
 
 
