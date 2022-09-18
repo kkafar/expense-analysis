@@ -2,7 +2,7 @@ import csv
 import datetime as dt
 import numpy as np
 from functools import reduce
-from transaction import Transaction
+from data.transaction import Transaction
 from collections import defaultdict
 
 def timediff_in_months(date_begin: dt.date, date_end: dt.date) -> int:
