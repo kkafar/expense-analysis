@@ -30,8 +30,9 @@ class TransactionDetails(object):
         self.localization: StrOpt = TransactionDetails.__find_detail_and_strip_prefix(
             TransactionDetails.PREFIXES[TransactionDetails.KEY_LOCALIZATION], raw_details)
 
-        self.other_details: list[str] = list(filter(lambda detail: not any(map(lambda prefix: detail.startswith(prefix), 
-                                                                           TransactionDetails.PREFIXES.values())), raw_details))
+        self.other_details: list[str] = list(
+            filter(lambda detail: not any(map(lambda prefix: detail.startswith(prefix), 
+                                              TransactionDetails.PREFIXES.values())), raw_details))
 
     def __str__(self) -> str:
         return f"Title: {self.title}\nSender: {self.sender}\nReceiver: {self.receiver}\nLocalization: {self.localization}\nOther info:\n  {self.__format_other_info()}"
