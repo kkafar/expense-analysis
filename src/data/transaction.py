@@ -57,15 +57,22 @@ class TransactionDetails(object):
 
 
 class TransactionCategory(object):
-    def __init__(self, name: str, pred: Callable[['Transaction'], bool]) -> None:
+    def __init__(self, name: str, pred: Callable[['Transaction'], bool], *args) -> None:
         self.name = name
         self.pred = pred
+        self.args = args
+
 
     def __repr__(self) -> str:
         return f"TransactionCategory(name={self.name})"
+
         
     def __str__(self) -> str:
         return self.name
+
+        
+    # def accept(t: 'Transaction') -> bool:
+    #     t.
 
 
 def _has_any_substr(string: StrOpt, substrs: list[str]) -> bool:

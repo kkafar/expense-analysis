@@ -1,11 +1,13 @@
 from pprint import pprint
 from typing import Counter
 import numpy as np
+from data.datamanager import DataManager
 from datautil import *
 from cli import *
 from presentation.cli import print_result_table
 from presentation.plot import plot_result
 from util.lazy import LazyEval
+from pathlib import Path
 
     
 def main():
@@ -46,6 +48,9 @@ def main():
             total_net=total_net.get(),
             total_gross=total_gross.get(),
             total_expense=total_expense.get())
+
+            
+    DataManager(Path(args.file).parent).save_categories(Transaction.CATEGORIES)
 
             
     # data_by_localization = group_by_localization(data)
