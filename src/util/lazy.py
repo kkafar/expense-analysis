@@ -10,6 +10,6 @@ class LazyEval(object):
 
     def get(self):
         if not self.evaluated and self._cache is None:
-            self._cache = self.method(*self.args)
+            self._cache = self._method(*self._args)
             self.evaluated = True
         return self._cache
